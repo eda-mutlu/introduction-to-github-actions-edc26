@@ -23,12 +23,12 @@ jobs:
       - run: echo "Hello, I'm macos-latest"
   slow_job:
     # needs: [ubuntu_job] # Uncomment this line to make the slow job dependent on the other two jobs
-    timeout-minutes: 1
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello, I'm a slow job"
       - name: Sleep for 120 seconds...
-        run: sleep 120
+        run: sleep 30
   waiting_job:
     needs: [slow_job]
     runs-on: ubuntu-latest
