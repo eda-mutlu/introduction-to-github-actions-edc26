@@ -14,7 +14,7 @@ env:
   GREETING: "Hello, I'm ubuntu latest. I'm an environment variable" # This environment variable will be available in all jobs and steps of the workflow
 # Group of jobs to run as part of the workflow
 jobs:
-  job_id:
+  secret_job:
     env: 
       JOB_GREETING: "Hello, I'm a job environment variable" # This environment variable will be available in all steps of this job
     runs-on: ubuntu-latest
