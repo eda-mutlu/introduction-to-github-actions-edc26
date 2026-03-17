@@ -1,0 +1,38 @@
+name: Workflow of exercise 2
+run-name: Second workflow # Optional
+
+# Events triggering the workflow
+on: 
+  push: 
+    branches: [main]
+  pull_request:
+    branches: 
+      - main
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+# Group of jobs to run as part of the workflow
+jobs:
+  ubuntu_job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, I'm ubuntu-latest"
+  macos_job:
+    runs-on: macos-latest
+    steps:
+      - run: echo "Hello, I'm macos-latest"
+  slow_job:
+    # needs: [ubuntu_job] # Uncomment this line to make the slow job dependent on the other two jobs
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, I'm a slow job"
+      - name: Sleep for 120 seconds...
+        run: sleep 30
+  waiting_job:
+    needs: [slow_job]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, I'm waiting for the slow job to finish"
+      - name: Listing files in the current directory...
+        run: ls -l
