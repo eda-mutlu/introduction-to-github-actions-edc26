@@ -1,0 +1,30 @@
+name: Workflow of exercise 3
+run-name: Third workflow # Optional
+
+# Events triggering the workflow
+on: 
+  push: 
+    branches: [main]
+  pull_request:
+    branches: 
+      - main
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+env:
+  GREETING: "Hello, I'm ubuntu latest. I'm an environment variable" # This environment variable will be available in all jobs and steps of the workflow
+# Group of jobs to run as part of the workflow
+jobs:
+  job_id:
+    env: 
+      JOB_GREETING: "Hello, I'm a job environment variable" # This environment variable will be available in all steps of this job
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ env.GREETING }}" # Accessing the workflow environment variable
+      - run: echo "${ JOB_GREETING}" # Accessing the job environment variable
+      - name: Step with token
+        run: echo "${{ github.token }}" # Accessing the GitHub token
+      - name: Step with secret
+        env: 
+          SECRET_VALUE: ${{ secrets.EXERCISE3_SECRET }} # This environment variable will only be available in this step
+        if: ${{ env.SECRET_VALUE == "Psyduck"}}  
+        run: echo "${{ env.SECRET_VALUE }}" # Accessing the secret value
