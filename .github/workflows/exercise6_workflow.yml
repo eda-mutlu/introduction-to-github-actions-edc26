@@ -1,0 +1,36 @@
+name: Workflow of exercise 6
+run-name: Exercise 6
+
+permissions: {}
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  pdfbuilder_job:
+    runs-on: ubuntu-latest
+    container: pandoc/extra
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Building the PDF of exercises.md
+        run: pandoc --template eisvogel exercises.md -o exercises.pdf
+
+      - name: Uploading the exercise PDF as an artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: exercises-pdf
+          path: exercises.pdf
+          retention-days: 3
+
+      - name: Building the PDF of slides.md
+        run: pandoc -t beamer slides.md  -o  slides.pdf
+
+      - name: Uploading the slides PDF as an artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: slides-pdf
+          path: slides.pdf
+          retention-days: 3
