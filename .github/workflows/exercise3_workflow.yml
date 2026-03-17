@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ env.GREETING }}" # Accessing the workflow environment variable
-      - run: echo "${ JOB_GREETING}" # Accessing the job environment variable
+      - run: echo "${{ env.JOB_GREETING }}" # Accessing the job environment variable
       - name: Step with token
         run: echo "${{ github.token }}" # Accessing the GitHub token
       - name: Step with secret
