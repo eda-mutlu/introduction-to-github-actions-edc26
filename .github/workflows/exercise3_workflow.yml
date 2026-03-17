@@ -26,5 +26,5 @@ jobs:
       - name: Step with secret
         env: 
           SECRET_VALUE: ${{ secrets.EXERCISE3_SECRET }} # This environment variable will only be available in this step
-        if: ${{ env.SECRET_VALUE == "Psyduck"}}  
+        if: ${{ env.SECRET_VALUE == 'Psyduck'}}  
         run: echo "${{ env.SECRET_VALUE }}" # Accessing the secret value
